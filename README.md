@@ -1,18 +1,20 @@
-spark-wordCount application
+#spark-wordCount application
 
 This Spark/Core application is the basic hello world spark application
 
-Input
+#Input
 
 The application runs on Spark and takes the King James Version of the Bible, then converts each line to lower case, creating an RDD.
 
-Output
+#Output
 
 The application writes the following files as output:
 
 -WordCount2GroupBy
 -WordCount2SortByCount
 -WordCount2SortByWord
+
+#Requirements 
 
 Scala 2.10.5
 SBT (Scala 2.10 compatible version)
