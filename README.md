@@ -1,6 +1,6 @@
 #spark-wordCount application
 
-This Spark/Core application is the basic hello world spark application
+This Spark/Core application is the basic hello world spark application. These examples are copied from the spark-worshop at http://www.typesafe.com/activator/template/spark-workshop from Dean Wampler
 
 #Input
 
