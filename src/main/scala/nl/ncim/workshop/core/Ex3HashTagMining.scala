@@ -35,6 +35,7 @@ object Ex3HashTagMining {
     val conf = new SparkConf()
       .setAppName("Hashtag mining")
       .setMaster("local[*]")
+      .set("spark.driver.allowMultipleContexts", "true")
 
     val sc = new SparkContext(conf)
 

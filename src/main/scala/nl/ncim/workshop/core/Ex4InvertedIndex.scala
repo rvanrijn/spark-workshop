@@ -26,24 +26,20 @@ object Ex4InvertedIndex {
     val conf = new SparkConf()
       .setAppName("Inverted index")
       .setMaster("local[*]")
+      .set("spark.driver.allowMultipleContexts", "true")
 
     val sc = new SparkContext(conf)
 
-    try {
-      val tweets = sc.textFile("data/reduced-tweets.json")
-        .mapPartitions(TweetUtils.parseFromJson(_))
+    val tweets = sc.textFile("data/reduced-tweets.json")
+      .mapPartitions(TweetUtils.parseFromJson(_))
 
-      // Let's try it out!
-      // Hint:
-      // For each tweet, extract all the hashtag and then create couples (hashtag,tweet)
-      // Then group the tweets by hashtag
-      // Finally return the inverted index as a map structure
-      // TODO write code here
-      null
-    }
-    finally {
-      sc.stop() // Stop (shut down) the context.
-    }
+    // Let's try it out!
+    // Hint:
+    // For each tweet, extract all the hashtag and then create couples (hashtag,tweet)
+    // Then group the tweets by hashtag
+    // Finally return the inverted index as a map structure
+    // TODO write code here
+    null
   }
 
 }

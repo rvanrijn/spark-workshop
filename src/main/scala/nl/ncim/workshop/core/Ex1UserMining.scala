@@ -35,17 +35,13 @@ object Ex1UserMining {
     val conf = new SparkConf()
       .setAppName("User mining")
       .setMaster("local[*]")
+      .set("spark.driver.allowMultipleContexts", "true")
 
     val sc = new SparkContext(conf)
 
-    try {
-      // Load the data and parse it into a Tweet.
-      // Look at the Tweet Object in the TweetUtils class.
-      sc.textFile(pathToFile).mapPartitions(TweetUtils.parseFromJson(_))
-    }
-    finally {
-      sc.stop() // Stop (shut down) the context.
-    }
+    // Load the data and parse it into a Tweet.
+    // Look at the Tweet Object in the TweetUtils class.
+    sc.textFile(pathToFile).mapPartitions(TweetUtils.parseFromJson(_))
 
   }
 

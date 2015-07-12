@@ -27,30 +27,27 @@ object Ex0Wordcount {
    */
   def loadData(): RDD[String] = {
 
+
     // create spark configuration and spark context: the Spark context is the entry point in Spark.
     // It represents the connexion to Spark and it is the place where you can configure the common properties
     // like the app name, the master url, memories allocation...
     val conf = new SparkConf()
       .setAppName("Wordcount")
       .setMaster("local[*]") // here local mode. And * means you will use as much as you have cores.
+      .set("spark.driver.allowMultipleContexts", "true")
 
     val sc = new SparkContext(conf)
 
-    try {
-      // load data and create an RDD where each element will be a word
-      // Here the flatMap method is used to separate the word in each line using the space separator
-      // In this way it returns an RDD where each "element" is a word
-      val input = sc.textFile(pathToFile)
-        .flatMap(_.split(" "))
+    // load data and create an RDD where each element will be a word
+    // Here the flatMap method is used to separate the word in each line using the space separator
+    // In this way it returns an RDD where each "element" is a word
+    val input = sc.textFile(pathToFile)
+      .flatMap(_.split(" "))
 
-      // Cache the RDD in memory for fast, repeated access.
-      // You don't have to do this and you shouldn't unless the data IS reused.
-      // Otherwise, you'll use RAM inefficiently.
-      input.cache
-    }
-    finally {
-      sc.stop() // Stop (shut down) the context.
-    }
+    // Cache the RDD in memory for fast, repeated access.
+    // You don't have to do this and you shouldn't unless the data IS reused.
+    // Otherwise, you'll use RAM inefficiently.
+    input.cache
   }
 
   /**

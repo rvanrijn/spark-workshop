@@ -48,6 +48,7 @@ object DataFrameOnTweets {
     val conf = new SparkConf()
       .setAppName("Dataframe")
       .setMaster("local[*]")
+      .set("spark.driver.allowMultipleContexts", "true")
 
     val sc = new SparkContext(conf)
 

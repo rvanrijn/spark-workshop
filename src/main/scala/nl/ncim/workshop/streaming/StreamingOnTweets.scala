@@ -58,6 +58,7 @@ object StreamingOnTweets extends App {
     val conf = new SparkConf()
       .setAppName("streaming")
       .setMaster("local[*]")
+      .set("spark.driver.allowMultipleContexts", "true")
 
     val sc = new SparkContext(conf)
     // create a StreamingContext by providing a Spark context and a window (2 seconds batch)
