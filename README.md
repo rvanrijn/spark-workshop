@@ -1,4 +1,4 @@
-#spark-wordCount application
+#sparkworkshop
 
 In this workshop the exercises are focused on using the Spark core and Spark Streaming APIs, and also the dataFrame on data processing. 
 Exercises are available Scala on my github account (here in scala). You just have to clone the project and go!
