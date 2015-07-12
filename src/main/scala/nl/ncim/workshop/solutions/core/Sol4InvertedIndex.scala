@@ -1,16 +1,9 @@
 package nl.ncim.workshop.solutions.core
 
-package nl.ncim.workshop.solutions.core
-
 import org.apache.spark.{SparkContext, SparkConf}
-
-import nl.ncim.workshop.utils.TweetUtils
-import nl.ncim.workshop.utils.TweetUtils.Tweet
-
 import scala.collection.Map
 
 object Sol4InvertedIndex {
-
   /**
    *
    *  Buildind a hashtag search engine   *

@@ -1,6 +1,5 @@
 package nl.ncim.workshop.solutions.sql
 
-
 import org.apache.spark._
 import org.apache.spark.sql._
 

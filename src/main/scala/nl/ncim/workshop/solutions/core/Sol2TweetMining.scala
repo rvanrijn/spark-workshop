@@ -2,8 +2,6 @@ package nl.ncim.workshop.solutions.core
 
 import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.rdd._
-import  nl.ncim.workshop.solutions.utils
-import nl.ncim.workshop.utils.TweetUtils.Tweet
 
 /**
  * The scala Spark API documentation: http://spark.apache.org/docs/latest/api/scala/index.html

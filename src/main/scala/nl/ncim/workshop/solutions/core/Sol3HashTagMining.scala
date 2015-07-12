@@ -1,11 +1,7 @@
 package nl.ncim.workshop.solutions.core
 
-package nl.ncim.workshop.solutions.core
-
 import org.apache.spark.{SparkContext, SparkConf}
 import org.apache.spark.rdd._
-import nl.ncim.workshop.utils.TweetUtils
-import nl.ncim.workshop.utils.TweetUtils._
 
 /**
  * The Java Spark API documentation: http://spark.apache.org/docs/latest/api/java/index.html
