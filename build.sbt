@@ -22,6 +22,8 @@ val twitter4j = "org.twitter4j" % "twitter4j-core" % "3.0.3"
 
 val scalaTest =  "org.scalatest" % "scalatest_2.10" % "2.2.5"
 
+resolvers += "Akka Repository" at "http://repo.akka.io/releases/"
+
 libraryDependencies ++= Seq(
   sparkCore,
   sparkSql,
