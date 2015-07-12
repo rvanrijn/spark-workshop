@@ -23,10 +23,10 @@ import org.apache.spark._
 object StreamingOnTweets extends App {
 
   def top10Hashtag() = {
-    val CONSUMER_KEY = "AFiNCb8vxYZfhPls2DXyDpF"
-    val CONSUMER_SECRET = "JRg7SyVFkXEESWbzFzC1xaIGRC3xNdTvrekMvMFk6tjKooOR"
-    val ACCESS_TOKEN = "493498548-HCt6LCposCb3Ij7Ygt7ssTxTBPwGoPrnkkDQoaN"
-    val ACCESS_TOKEN_SECRET = "3px3rnBzWa9bmOmOQPWNMpYc4qdOrOdxGFgp6XiCkEKH"
+    val CONSUMER_KEY = ""
+    val CONSUMER_SECRET = ""
+    val ACCESS_TOKEN = ""
+    val ACCESS_TOKEN_SECRET = ""
 
     System.setProperty("twitter4j.oauth.consumerKey", CONSUMER_KEY)
     System.setProperty("twitter4j.oauth.consumerSecret", CONSUMER_SECRET)
