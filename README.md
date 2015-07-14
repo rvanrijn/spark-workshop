@@ -55,3 +55,6 @@ In the exercise you will have to:
 * Print the schema of the dataframe
 * Find people who are located in Paris
 * Find the user who tweets the more
+
+
+Got these examples from http://www.duchess-france.org/starting-with-spark-in-practice/
