@@ -20,14 +20,13 @@ import org.apache.spark.rdd.RDD
  */
 object Ex0Wordcount {
 
+
   val pathToFile = "data/wordcount.txt"
 
   /**
    * Load the data from the text file and return an RDD of words
    */
   def loadData(): RDD[String] = {
-
-
     // create spark configuration and spark context: the Spark context is the entry point in Spark.
     // It represents the connexion to Spark and it is the place where you can configure the common properties
     // like the app name, the master url, memories allocation...
@@ -41,13 +40,8 @@ object Ex0Wordcount {
     // load data and create an RDD where each element will be a word
     // Here the flatMap method is used to separate the word in each line using the space separator
     // In this way it returns an RDD where each "element" is a word
-    val input = sc.textFile(pathToFile)
+    sc.textFile(pathToFile)
       .flatMap(_.split(" "))
-
-    // Cache the RDD in memory for fast, repeated access.
-    // You don't have to do this and you shouldn't unless the data IS reused.
-    // Otherwise, you'll use RAM inefficiently.
-    input.cache
   }
 
   /**
@@ -56,18 +50,29 @@ object Ex0Wordcount {
   def wordcount(): RDD[(String, Int)] = {
     val tweets = loadData
 
-    // Step 1: the mapper step
-    // The philosophy: we want to attribute the number 1 to each word: so we create couples (word, 1).
-    // Hint: look at the mapToPair method
-    // TODO write code here
+    /**
+     * map will convert the list of words to (word, 1) sequence.
+     * Now the shuffle stage transformation reduceByKey will reduce it to a dataset of (word, total count of this word) form.
+     * All Transformation are lazy operation. So we need to perform an Action to execute and return the output to the driver program.
+     */
+    tweets.map(x => (x, 1))
+      .reduceByKey(_ + _)
 
-    // Step 2: reducer step
-    // The philosophy: now you have a couple (key, value) where the key is a word, you want to aggregate the value for each word.
-    // So you will use a reducer function.
-    // Hint: the Spark API provides some reduce methods
-    // TODO write code here
-    null
 
+    /**
+     * Output example of anonymous map function: map(x => (x,1))
+     *
+     * (fallen,1)
+     * (by,1)
+     * (the,1)
+     * (wayside,1)
+     * (in,1)
+     * (the,1)
+     * (word,1)
+     * (processing,1)
+     * (era,1)
+     * (the,1)
+     */
   }
 
   /**
@@ -76,9 +81,7 @@ object Ex0Wordcount {
   def filterOnWordcount(): RDD[(String, Int)] = {
     val tweets = wordcount
 
-    // Hint: the Spark API provides a filter method
-    // TODO write code here
-    null
+    tweets.filter(_._2 > 4)
   }
 
 }

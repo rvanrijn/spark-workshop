@@ -1,5 +1,6 @@
 package nl.ncim.workshop.streaming
 
+import org.apache.spark.sql.{SQLContext, DataFrame}
 import org.apache.spark.streaming.{Seconds, StreamingContext}
 import org.apache.spark.streaming.twitter._
 import org.apache.spark.SparkConf
@@ -37,12 +38,13 @@ import org.apache.spark._
  */
 object StreamingOnTweets extends App {
 
+
+
   def top10Hashtag() = {
-    // TODO fill the keys and tokens
-    val CONSUMER_KEY = "TODO"
-    val CONSUMER_SECRET = "TODO"
-    val ACCESS_TOKEN = "TODO"
-    val ACCESS_TOKEN_SECRET = "TODO"
+    val CONSUMER_KEY = "m32N6Tw1m5MHFZKbS5RWkan0q"
+    val CONSUMER_SECRET = "xB92tFhlwVSUtORsOhS32kdPHpbiIKTqAwYdKCSXIpYhTHAv5Q"
+    val ACCESS_TOKEN = "2590200469-7pYCp4wSaP9ozlv0eiExnzkN2K9MLV5isHgeJNT"
+    val ACCESS_TOKEN_SECRET = "uktsAFY6eOFoZfv0zstLRR3ggNRP62JcfgO3MfirZfFHX"
 
     System.setProperty("twitter4j.oauth.consumerKey", CONSUMER_KEY)
     System.setProperty("twitter4j.oauth.consumerSecret", CONSUMER_SECRET)
@@ -58,19 +60,14 @@ object StreamingOnTweets extends App {
     val conf = new SparkConf()
       .setAppName("streaming")
       .setMaster("local[*]")
-      .set("spark.driver.allowMultipleContexts", "true")
 
     val sc = new SparkContext(conf)
     // create a StreamingContext by providing a Spark context and a window (2 seconds batch)
     val ssc = new StreamingContext(sc, Seconds(2))
 
-    println("Initializing Twitter stream...")
-
-    // Here we start a stream of tweets
-    // The object tweetsStream is a DStream of tweet statuses:
+    // create a DStream (sequence of RDD). The object tweetsStream is a DStream of tweet statuses:
     // - the Status class contains all information of a tweet
     // See http://twitter4j.org/javadoc/twitter4j/Status.html
-    // and fill the keys and tokens
     val tweetsStream = TwitterUtils.createStream(ssc, None, Array[String]())
 
     //Your turn ...
@@ -78,29 +75,29 @@ object StreamingOnTweets extends App {
     // Print the status text of the some of the tweets
     // You must see tweets appear in the console
     val status = tweetsStream.map(_.getText)
-    // Here print the status's text: see the Status class
-    // Hint: use the print method
-    // TODO write code here
+    status.print()
 
-
-    // Find the 10 most popular Hashtag in the last minute
+    // Find the 10 most popular Hashtag in the last 60 seconds
 
     // For each tweet in the stream filter out all the hashtags
     // stream is like a sequence of RDD so you can do all the operation you did in the first part of the hands-on
-    // Hint: think about what you did in the Hashtagmining part
-    // TODO write code here
-    val hashTags = null
+    val hashTags = tweetsStream.flatMap(status => status.getText.split(" ").filter(_.startsWith("#")).filter(_.length() > 1))
 
-    // Now here, find the 10 most popular hashtags in a 60 seconds window
+    // Now here, find the 10 most popular hashtags in a 30 seconds window
     // Hint: look at the reduceByKeyAndWindow function in the spark doc.
     // Reduce last 60 seconds of data
-    // Hint: look at the transform function to operate on the DStream
-    // TODO write code here
-    val top10 = null
+    val top10 = hashTags.map(x => (x, 1))
+      .reduceByKeyAndWindow((_ + _), Seconds(60))
+      .map { case (topic, count) => (count, topic) }
+      .transform(_.sortByKey(false))
 
     // and return the 10 most populars
-    // Hint: loop on the RDD and take the 10 most popular
-    // TODO write code here
+    top10.foreachRDD { rdd => {
+      val topList = rdd.take(10)
+      // Now that we have our top10 we can print them out....
+      topList.foreach { case (count, tag) => println(s"$tag: $count") }
+    }
+    }
 
     // we need to tell the context to start running the computation we have setup
     // it won't work if you don't add this!

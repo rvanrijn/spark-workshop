@@ -7,39 +7,36 @@ import org.apache.spark.{SparkContext, SparkConf}
 import scala.collection.Map
 
 object Ex4InvertedIndex {
-
   /**
    *
-   * Buildind a hashtag search engine
+   *  Buildind a hashtag search engine   *
+   *  The goal is to build an inverted index. An inverted is the data
+   *  structure  used to build search engines.
+   *  How does it work?
    *
-   * The goal is to build an inverted index. An inverted is the data structure used to build search engines.
-   *
-   * How does it work?
-   *
-   * Assuming #spark is an hashtag that appears in tweet1, tweet3, tweet39.
-   * The inverted index that you must return should be a Map (or HashMap) that contains a (key, value) pair as (#spark, List(tweet1,tweet3, tweet39)).
-   *
-   * Use the Ex4InvertedIndexSpec to implement the code.
+   *  Assuming #spark is an hashtag that appears in tweet1, tweet3, tweet39.
+   *  Our inverted index is a Map (or HashMap) that contains a
+   *  (key, value) pair as (#spark, List(tweet1,tweet3, tweet39)).
    */
   def invertedIndex(): Map[String, Iterable[Tweet]] = {
     // create spark  configuration and spark context
-    val conf = new SparkConf()
-      .setAppName("Inverted index")
-      .setMaster("local[*]")
+    val conf = new SparkConf ()
+      .setAppName ("Inverted index")
+      .setMaster ("local[*]")
       .set("spark.driver.allowMultipleContexts", "true")
 
-    val sc = new SparkContext(conf)
+    val sc = new SparkContext (conf)
 
-    val tweets = sc.textFile("data/reduced-tweets.json")
-      .mapPartitions(TweetUtils.parseFromJson(_))
+    val tweets = sc.textFile ("data/reduced-tweets.json")
+      .mapPartitions (TweetUtils.parseFromJson (_) )
 
-    // Let's try it out!
-    // Hint:
-    // For each tweet, extract all the hashtag and then create couples (hashtag,tweet)
-    // Then group the tweets by hashtag
-    // Finally return the inverted index as a map structure
-    // TODO write code here
-    null
+    //Let's try it out
+    tweets.flatMap{ tweet =>
+      val hts = tweet.text.split (" ").filter (_.startsWith ("#") ).filter (_.length () > 1)
+      hts.map (ht => (ht, tweet) )
+    }
+      .groupByKey //expensive shuffle
+      .collectAsMap //even more expensive ops
   }
 
 }

@@ -11,7 +11,7 @@ import org.scalatest.{Matchers, FunSuite}
 class StreamingOnTweetsSpec extends FunSuite with Matchers {
 
   test("should return the 10 most popular hashtag") {
-    StreamingOnTweets.top10Hashtag
+    StreamingOnTweets
     // You should see something like that:
     // Most popular hashtag : #tlot: 1, #followme: 1,...
   }

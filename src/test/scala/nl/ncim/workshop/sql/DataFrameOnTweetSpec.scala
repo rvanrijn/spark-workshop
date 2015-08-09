@@ -24,25 +24,25 @@ class DataFrameOnTweetsSpec extends FunSuite with Matchers {
     //|       United States|572575243883036672|        Claremont|1/ "Without the a...|        Daniel Beer|
   }
 
-  test("should print the schema"){
-    DataFrameOnTweets.printSchema
-    // you must see something like that in your console:
-    // root
-    //    |-- country: string (nullable = true)
-    //    |-- id: string (nullable = true)
-    //    |-- place: string (nullable = true)
-    //    |-- text:string(nullable = true)
-    //    |-- user: string (nullable = true)
-  }
+//  test("should print the schema"){
+//    DataFrameOnTweets.printSchema
+//    // you must see something like that in your console:
+//    // root
+//    //    |-- country: string (nullable = true)
+//    //    |-- id: string (nullable = true)
+//    //    |-- place: string (nullable = true)
+//    //    |-- text:string(nullable = true)
+//    //    |-- user: string (nullable = true)
+//  }
 
   test("should group the tweets by location") {
     val data = DataFrameOnTweets.filterByLocation
     data.count should be (329)
   }
 
-  test("should return the most popular twitterer") {
-    val populars = DataFrameOnTweets.mostPopularTwitterer
-    populars should be (258, "#QuissyUpSoon")
-  }
+//  test("should return the most popular twitterer") {
+//    val populars = DataFrameOnTweets.mostPopularTwitterer
+//    populars should be (258, "#QuissyUpSoon")
+//  }
 
 }

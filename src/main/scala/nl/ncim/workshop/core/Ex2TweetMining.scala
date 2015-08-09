@@ -24,7 +24,6 @@ import nl.ncim.workshop.utils.TweetUtils.Tweet
  * Use the Ex2TweetMiningSpec to implement the code.
  */
 object Ex2TweetMining {
-
   val pathToFile = "data/reduced-tweets.json"
 
   /**
@@ -41,8 +40,8 @@ object Ex2TweetMining {
 
     // Load the data and parse it into a Tweet.
     // Look at the Tweet Object in the TweetUtils class.
-    sc.textFile(pathToFile)
-      .mapPartitions(TweetUtils.parseFromJson(_))
+    sc.textFile(pathToFile).mapPartitions(TweetUtils.parseFromJson(_))
+
   }
 
   /**
@@ -51,9 +50,7 @@ object Ex2TweetMining {
   def mentionOnTweet(): RDD[String] = {
     val tweets = loadData
 
-    // Hint: think about separating the word in the text field and then find the mentions
-    // TODO write code here
-    null
+    tweets.flatMap(_.text.split(" ").filter(_.startsWith("@")).filter(_.length > 1))
   }
 
   /**
@@ -62,19 +59,18 @@ object Ex2TweetMining {
   def countMentions(): RDD[(String, Int)] = {
     val mentions = mentionOnTweet
 
-    // Hint: think about what you did in the wordcount example
-    // TODO write code here
-    null
+    mentions.map((_, 1)).reduceByKey(_ + _)
   }
 
   /**
    * Find the 10 most mentioned persons by descending order
    */
   def top10mentions(): Array[(String, Int)] = {
+    val count = countMentions
 
-    // Hint: take a look at the sorting and take methods
-    // TODO write code here
-    null
+    count.sortBy(_._2, false, 1).take(10)
+
   }
+
 
 }
