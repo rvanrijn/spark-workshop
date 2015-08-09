@@ -41,10 +41,10 @@ object StreamingOnTweets extends App {
 
 
   def top10Hashtag() = {
-    val CONSUMER_KEY = "m32N6Tw1m5MHFZKbS5RWkan0q"
-    val CONSUMER_SECRET = "xB92tFhlwVSUtORsOhS32kdPHpbiIKTqAwYdKCSXIpYhTHAv5Q"
-    val ACCESS_TOKEN = "2590200469-7pYCp4wSaP9ozlv0eiExnzkN2K9MLV5isHgeJNT"
-    val ACCESS_TOKEN_SECRET = "uktsAFY6eOFoZfv0zstLRR3ggNRP62JcfgO3MfirZfFHX"
+    val CONSUMER_KEY = ""
+    val CONSUMER_SECRET = ""
+    val ACCESS_TOKEN = ""
+    val ACCESS_TOKEN_SECRET = ""
 
     System.setProperty("twitter4j.oauth.consumerKey", CONSUMER_KEY)
     System.setProperty("twitter4j.oauth.consumerSecret", CONSUMER_SECRET)
