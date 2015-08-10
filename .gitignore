@@ -67,7 +67,7 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 
-#MacOSX specific
+#MacOSX specific:
 .DS_Store
 
 
