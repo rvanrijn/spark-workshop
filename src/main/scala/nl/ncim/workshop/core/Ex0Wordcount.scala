@@ -55,24 +55,7 @@ object Ex0Wordcount {
      * Now the shuffle stage transformation reduceByKey will reduce it to a dataset of (word, total count of this word) form.
      * All Transformation are lazy operation. So we need to perform an Action to execute and return the output to the driver program.
      */
-    tweets.map(x => (x, 1))
-      .reduceByKey(_ + _)
 
-
-    /**
-     * Output example of anonymous map function: map(x => (x,1))
-     *
-     * (fallen,1)
-     * (by,1)
-     * (the,1)
-     * (wayside,1)
-     * (in,1)
-     * (the,1)
-     * (word,1)
-     * (processing,1)
-     * (era,1)
-     * (the,1)
-     */
   }
 
   /**
@@ -80,8 +63,6 @@ object Ex0Wordcount {
    */
   def filterOnWordcount(): RDD[(String, Int)] = {
     val tweets = wordcount
-
-    tweets.filter(_._2 > 4)
   }
 
 }
